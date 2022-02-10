@@ -1,0 +1,16 @@
+package com.lemal.gateway;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@ComponentScan({"com.lemal.gateway"})
+@EntityScan("com.lemal.gateway")
+@EnableJpaRepositories("com.delivery.repository")
+public class GatewayApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(GatewayApplication.class, args);
+	}
+
+}

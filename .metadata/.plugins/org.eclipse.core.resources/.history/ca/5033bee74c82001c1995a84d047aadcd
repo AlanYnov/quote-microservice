@@ -1,0 +1,224 @@
+/*
+ * Copyright 2002-2017 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.lemal.gateway.service;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.samples.bookclinic.model.Author;
+import org.springframework.samples.bookclinic.model.Book;
+import org.springframework.samples.bookclinic.repository.AuthorRepository;
+import org.springframework.samples.bookclinic.repository.BookRepository;
+import org.springframework.stereotype.Service;
+
+/**
+ * Mostly used as a facade for all Bookclinic controllers
+ * Also a placeholder for @Transactional and @Cacheable annotations
+ *
+ * @author Michael Isvy
+ * @author Vitaliy Fedoriv
+ */
+@Service
+
+public class LibraryServiceImpl implements LibraryService {
+
+    private BookRepository bookRepository;
+    private AuthorRepository authorRepository;
+
+    @Autowired
+     public LibraryServiceImpl(
+       		 BookRepository bookRepository,
+    		 AuthorRepository authorRepository
+        this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
+    }
+
+	@Override
+	public Collection<Book> findAllBooks()  {
+		return bookRepository.findAll();
+	}
+
+	@Override
+	public void deleteBook(Book book)  {
+		bookRepository.delete(book.getId());
+	}
+
+	@Override
+	public Visit findVisitById(int visitId)  {
+		Visit visit = null;
+		try {
+			visit = visitRepository.findById(visitId);
+		} catch (Exception e) {
+		// just ignore not found exceptions for Jdbc/Jpa realization
+			return null;
+		}
+		return visit;
+	}
+
+	@Override
+	public Collection<Visit> findAllVisits()  {
+		return visitRepository.findAll();
+	}
+
+	@Override
+	public void deleteVisit(Visit visit)  {
+		visitRepository.delete(visit.getId());
+	}
+
+	@Override
+	public Vet findVetById(int id)  {
+		Vet vet = null;
+		try {
+			vet = vetRepository.findById(id);
+		} catch (Exception e) {
+		// just ignore not found exceptions for Jdbc/Jpa realization
+			return null;
+		}
+		return vet;
+	}
+
+	@Override
+	public Collection<Vet> findAllVets()  {
+		return vetRepository.findAll();
+	}
+
+	@Override
+	public void saveVet(Vet vet)  {
+		vetRepository.save(vet);
+	}
+
+	@Override
+	public void deleteVet(Vet vet)  {
+		vetRepository.delete(vet.getId());
+	}
+
+	@Override
+	public Collection<Author> findAllAuthors()  {
+		return authorRepository.findAll();
+	}
+
+	@Override
+	public void deleteAuthor(Author author)  {
+		authorRepository.delete(author.getId());
+	}
+
+	@Override
+	public BookType findBookTypeById(int bookTypeId) {
+		BookType bookType = null;
+		try {
+			bookType = bookTypeRepository.findById(bookTypeId);
+		} catch (Exception e) {
+		// just ignore not found exceptions for Jdbc/Jpa realization
+			return null;
+		}
+		return bookType;
+	}
+
+	@Override
+	public Collection<BookType> findAllBookTypes()  {
+		return bookTypeRepository.findAll();
+	}
+
+	@Override
+	public void saveBookType(BookType bookType)  {
+		bookTypeRepository.save(bookType);
+	}
+
+	@Override
+	public void deleteBookType(BookType bookType)  {
+		bookTypeRepository.delete(bookType.getId());
+	}
+
+	@Override
+	public Specialty findSpecialtyById(int specialtyId) {
+		Specialty specialty = null;
+		try {
+			specialty = specialtyRepository.findById(specialtyId);
+		} catch (Exception e) {
+		// just ignore not found exceptions for Jdbc/Jpa realization
+			return null;
+		}
+		return specialty;
+	}
+
+	@Override
+	public Collection<Specialty> findAllSpecialties()  {
+		return specialtyRepository.findAll();
+	}
+
+	@Override
+	public void saveSpecialty(Specialty specialty)  {
+		specialtyRepository.save(specialty);
+	}
+
+	@Override
+	public void deleteSpecialty(Specialty specialty)  {
+		specialtyRepository.delete(specialty.getId());
+	}
+
+	@Override
+	public Collection<BookType> findBookTypes()  {
+		return bookTypeRepository.findAll();
+	}
+
+	@Override
+	public Author findAuthorById(int id)  {
+		Author author = null;
+		try {
+			author = authorRepository.findById(id);
+		} catch (Exception e) {
+		// just ignore not found exceptions for Jdbc/Jpa realization
+			return null;
+		}
+		return author;
+	}
+
+	@Override
+	public Book findBookById(int id)  {
+		Book book = null;
+		try {
+			book = bookRepository.findById(id);
+		} catch (Exception e) {
+		// just ignore not found exceptions for Jdbc/Jpa realization
+			return null;
+		}
+		return book;
+	}
+
+	@Override
+	public void saveBook(Book book)  {
+		bookRepository.save(book);
+		
+	}
+
+	@Override
+	public void saveAuthor(Author author)  {
+		authorRepository.save(author);
+		
+	}
+
+	@Override
+	public Collection<Author> findAuthorByLastName(String lastName)  {
+		return authorRepository.findByLastName(lastName);
+	}
+
+	@Override
+	public Collection<Author> findAuthorsByBookName(String bookName) {
+		return authorRepository.findByBooks_Name(bookName);
+	}
+	
+}
